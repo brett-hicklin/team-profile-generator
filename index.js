@@ -1,3 +1,4 @@
+const fs = require("fs");
 const inquirer = require("inquirer");
 const generateHTML = require('./src/generateHTML')
 const Manager = require('./lib/Manager')
@@ -7,7 +8,7 @@ const Intern = require('./lib/Intern')
 let isAddingEmployee= true;
 const engineerArr = [];
 const internArr = [];
-
+let manager;
 const managerQuestions = [
   {
     type: "input",
@@ -106,7 +107,7 @@ function promptEmployee(){
             data.username
           );
           engineerArr.push(engineer);
-          console.log(engineer)
+         
         });
       } else if (data.role === "Intern") {
         return inquirer.prompt(internQuestions).then((data) => {
@@ -135,14 +136,14 @@ function promptEmployee(){
 
 // do something when they say no to add employee
 function userPrompts() {
-  inquirer.prompt(managerQuestions).then((data) => {
-    const manager = new Manager(
+  return inquirer.prompt(managerQuestions).then((data) => {
+     manager = new Manager(
       data.managerName,
       data.id,
       data.email,
       data.office
     );
-      console.log(manager);
+     
    
 
     
@@ -155,14 +156,18 @@ function userPrompts() {
   });
 }
 
-function writeToFile(fileName, data) {
-  const htmlDoc = generateHTML.generateHTML(data);
+function writeToFile() {
+ 
+  const htmlDoc = generateHTML.generateHTML(manager, engineerArr, internArr);
 
-  fs.writeFile(fileName, `${htmlDoc}`, (err) => {
+
+  fs.writeFile("team.html", `${htmlDoc}`, (err) => {
     err
       ? console.error(err)
       : console.log("You've successfully created a team profile");
   });
 }
 
-userPrompts();
+userPrompts().then(()=> {
+  writeToFile();
+});
