@@ -4,6 +4,10 @@ const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 
+let isAddingEmployee= true;
+const engineerArr = [];
+const internArr = [];
+
 const managerQuestions = [
   {
     type: "input",
@@ -84,9 +88,50 @@ const engineerQuestions = [
     message: "What is their role?",
     choices: ["Engineer", "Intern"],
     name: "role",
-    when: (answer) => answer.addEmployee === 'y'
+    when: (answer) => answer.addEmployee === true
   },
 ];
+function promptEmployee(){
+  return inquirer.prompt(addEmployeeConfirm).then((data) => {
+    
+    if (data.addEmployee) {
+
+      //create a new div
+      if (data.role === "Engineer") {
+        return inquirer.prompt(engineerQuestions).then((data) => {
+          const engineer = new Engineer(
+            data.name,
+            data.id,
+            data.email,
+            data.username
+          );
+          engineerArr.push(engineer);
+        });
+      } else if (data.role === "Intern") {
+        return inquirer.prompt(internQuestions).then((data) => {
+          const intern = new Intern(
+            data.name, 
+            data.id, 
+            data.email, 
+            data.school
+          );
+          internArr.push(intern);
+        });
+      }
+    } else { 
+      isAddingEmployee = false
+      return Promise.resolve();
+      //add something to take of false condition
+    }
+  } 
+  ).then(()=>{
+    if (isAddingEmployee){
+      return promptEmployee();
+    }
+  })
+
+}
+
 // do something when they say no to add employee
 function userPrompts() {
   inquirer.prompt(managerQuestions).then((data) => {
@@ -97,35 +142,15 @@ function userPrompts() {
       data.office
     );
 
-    const engineerArr = [];
-    const internArr = [];
+   
 
-    let isAddingEmployee= true;
-    while (isAddingEmployee) {
-      inquirer.prompt(addEmployeeConfirm).then((data) => {
-        if (data.addEmployee) {
-
-          //create a new div
-          if (data.role === "Engineer") {
-            inquirer.prompt(engineerQuestions).then((data) => {
-              const engineer = new Engineer(
-                data.name,
-                data.id,
-                data.email,
-                data.username
-              );
-              engineerArr.push(engineer);
-            });
-          } else if (data.role === "Intern") {
-            inquirer.prompt(internQuestions).then(() => {});
-          }
-        } else { 
-          isAddingEmployee = false
-          //add something to take of false condition
-        }
-      });
-    }
-    writeToFile("index.html", data);
+    
+    // while (isAddingEmployee) {
+      
+      return promptEmployee();
+    
+    // }
+    // writeToFile("index.html", data);
   });
 }
 
