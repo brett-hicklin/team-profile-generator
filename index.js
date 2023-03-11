@@ -123,7 +123,7 @@ function promptEmployee(){
     } else { 
       isAddingEmployee = false
       return Promise.resolve();
-      //add something to take of false condition
+     
     }
   } 
   ).then(()=>{
@@ -134,7 +134,6 @@ function promptEmployee(){
 
 }
 
-// do something when they say no to add employee
 function userPrompts() {
   return inquirer.prompt(managerQuestions).then((data) => {
      manager = new Manager(
@@ -143,16 +142,10 @@ function userPrompts() {
       data.email,
       data.office
     );
-     
-   
-
     
-    // while (isAddingEmployee) {
-      
       return promptEmployee();
-    
-    // }
-    // writeToFile("index.html", data);
+
+
   });
 }
 
