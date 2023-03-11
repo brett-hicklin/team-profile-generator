@@ -40,7 +40,28 @@ function generateEngineerHTML(engineerArr){
     return html
 }
 
-
+function generateInternHTML(internArr){
+    let html = '';
+    internArr.forEach((intern)=>{
+        
+        html += `<div class="card col-md-6 m-2" style="width: 16rem;">
+    <div class="card-body">
+        
+      <h3 class="card-title">${intern.getName()}</h3>
+      <h4 class="card-subtitle mb-2 text-muted ">${intern.getRole()}</h4>
+        
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">${intern.getId()}</li>
+        <li class="list-group-item">${intern.getEmail()}</li>
+        <li class="list-group-item">${intern.getSchool()}</li>
+      </ul>
+    </div>
+    
+  </div>
+  `
+    })
+    return html
+}
 
 function generateHTML(manager, engineerArr, internArr){
 console.log("in generate HTML")
@@ -68,6 +89,7 @@ console.log("in generate HTML")
     
     ${generateManagerHTML(manager)}
     ${generateEngineerHTML(engineerArr)}
+    ${generateInternHTML(internArr)}
     
     </div>  
 </body>
