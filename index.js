@@ -90,32 +90,43 @@ const engineerQuestions = [
 // do something when they say no to add employee
 function userPrompts() {
   inquirer.prompt(managerQuestions).then((data) => {
-    const manager = new Manager(data.managerName, data.id, data.email, data.office)
+    const manager = new Manager(
+      data.managerName,
+      data.id,
+      data.email,
+      data.office
+    );
+
     const engineerArr = [];
     const internArr = [];
-    
 
-      inquirer.prompt(addEmployeeConfirm).then((data)=>{
-        if(data.addEmployee){
+    let isAddingEmployee= true;
+    while (isAddingEmployee) {
+      inquirer.prompt(addEmployeeConfirm).then((data) => {
+        if (data.addEmployee) {
+
           //create a new div
-          if(data.role === 'Engineer'){
-            inquirer.prompt(engineerQuestions).then((data)=>{
-              const engineer = new Engineer(data.name, data.id, data.email, data.username)
-              engineerArr.push(engineer)
-            })
-
-
-          } else if (data.role === 'Intern'){
-            inquirer.prompt(internQuestions).then(){
-
-            }
-          } 
+          if (data.role === "Engineer") {
+            inquirer.prompt(engineerQuestions).then((data) => {
+              const engineer = new Engineer(
+                data.name,
+                data.id,
+                data.email,
+                data.username
+              );
+              engineerArr.push(engineer);
+            });
+          } else if (data.role === "Intern") {
+            inquirer.prompt(internQuestions).then(() => {});
+          }
+        } else { 
+          isAddingEmployee = false
+          //add something to take of false condition
         }
-  }) 
+      });
+    }
     writeToFile("index.html", data);
-  })
- 
-  
+  });
 }
 
 function writeToFile(fileName, data) {
