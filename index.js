@@ -106,6 +106,7 @@ function promptEmployee(){
             data.username
           );
           engineerArr.push(engineer);
+          console.log(engineer)
         });
       } else if (data.role === "Intern") {
         return inquirer.prompt(internQuestions).then((data) => {
@@ -141,7 +142,7 @@ function userPrompts() {
       data.email,
       data.office
     );
-
+      console.log(manager);
    
 
     

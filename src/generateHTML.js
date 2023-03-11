@@ -1,3 +1,8 @@
+function generateManagerHTML(manager){
+
+}
+
+
 function generateHTML(data){
     return ` 
     
@@ -10,4 +15,7 @@ function generateHTML(data){
     
     
     `
-}module.exports = generateHTML;
+
+
+}
+module.exports = generateHTML;
