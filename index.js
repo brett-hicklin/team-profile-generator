@@ -87,23 +87,35 @@ const engineerQuestions = [
     when: (answer) => answer.addEmployee === 'y'
   },
 ];
-
-const addEmployeeRole = [
-  
-];
+// do something when they say no to add employee
 function userPrompts() {
   inquirer.prompt(managerQuestions).then((data) => {
     const manager = new Manager(data.managerName, data.id, data.email, data.office)
-      inquirer.prompt(addEmployeeConfirm).then((data)=>{
-        
-      }) 
-      // use data to create instance of Manager
-      // new Manager(data.name, )
-      // if they selected engineer data.engineer 
-      // inquirer.prompt(engineerQuestions)
+    const engineerArr = [];
+    const internArr = [];
+    
 
+      inquirer.prompt(addEmployeeConfirm).then((data)=>{
+        if(data.addEmployee){
+          //create a new div
+          if(data.role === 'Engineer'){
+            inquirer.prompt(engineerQuestions).then((data)=>{
+              const engineer = new Engineer(data.name, data.id, data.email, data.username)
+              engineerArr.push(engineer)
+            })
+
+
+          } else if (data.role === 'Intern'){
+            inquirer.prompt(internQuestions).then(){
+
+            }
+          } 
+        }
+  }) 
     writeToFile("index.html", data);
-  });
+  })
+ 
+  
 }
 
 function writeToFile(fileName, data) {
