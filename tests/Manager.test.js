@@ -10,7 +10,7 @@ describe('Manager',() =>{
     })
 
     describe('getRole',()=>{
-        test('it should return the string manager',()=>{
+        test('it should return the string "Manager"',()=>{
             const manager = new Manager("brett","01","test@test.com","221");
             const role = manager.getRole();
             expect(role).toBe("Manager");
