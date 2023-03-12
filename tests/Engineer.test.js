@@ -11,7 +11,7 @@ describe('Engineer',() =>{
 
     describe('getRole',()=>{
         test('it should return the string "Engineer"',()=>{
-            const engineer = new Engineer("brett","02","test@test.com","brett-hicklin");
+            const engineer = new Engineer("brett","03","test@test.com","brett-hicklin");
             const role = engineer.getRole();
             expect(role).toBe("Engineer");
 
