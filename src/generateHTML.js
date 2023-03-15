@@ -1,3 +1,4 @@
+//generates the manager HTML card based on user input from inquirer
 function generateManagerHTML(manager){
    
 return `<div class="card col-md-6 m-2" style="width: 16rem;">
@@ -16,7 +17,7 @@ return `<div class="card col-md-6 m-2" style="width: 16rem;">
       </div>
       `
 }
-
+//generates the engineer HTML card based on user input from inquirer
 function generateEngineerHTML(engineerArr){
     let html = '';
     engineerArr.forEach((engineer)=>{
@@ -40,6 +41,7 @@ function generateEngineerHTML(engineerArr){
     return html
 }
 
+//generates the intern HTML card based on user input from inquirer
 function generateInternHTML(internArr){
     let html = '';
     internArr.forEach((intern)=>{
@@ -62,7 +64,7 @@ function generateInternHTML(internArr){
     })
     return html
 }
-
+//generates the HTML page and displays all the roles and cards for all the employees of the team
 function generateHTML(manager, engineerArr, internArr){
 console.log("in generate HTML")
     return ` 

@@ -1,3 +1,4 @@
+//pulling in all my required files 
 const fs = require("fs");
 const inquirer = require("inquirer");
 const generateHTML = require('./src/generateHTML')
@@ -5,10 +6,13 @@ const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 
+//setting a boolean to check to see if the user wants to add a new employee
 let isAddingEmployee= true;
+//sets empty arrays to add as many employees as the user would like
 const engineerArr = [];
 const internArr = [];
 let manager;
+//array of questions to be asked about the manager
 const managerQuestions = [
   {
     type: "input",
@@ -31,7 +35,7 @@ const managerQuestions = [
     name: "office",
   },
 ];
-
+//list of questions about interns
 const internQuestions = [
   {
     type: "input",
@@ -54,7 +58,7 @@ const internQuestions = [
     name: "school",
   },
 ];
-
+//list of questions about engineers
 const engineerQuestions = [
   {
     type: "input",
@@ -77,7 +81,7 @@ const engineerQuestions = [
     name: "username",
   },
 ];
-
+//list of questions asking about the addition of other employees to the team
  const addEmployeeConfirm = [
   {
     type: "confirm",
@@ -92,12 +96,13 @@ const engineerQuestions = [
     when: (answer) => answer.addEmployee === true
   },
 ];
+// prompt employee is the function that runs inquirer and adds team info to arrays as well as collect the information from the user
 function promptEmployee(){
   return inquirer.prompt(addEmployeeConfirm).then((data) => {
     
     if (data.addEmployee) {
 
-      //create a new div
+      
       if (data.role === "Engineer") {
         return inquirer.prompt(engineerQuestions).then((data) => {
           const engineer = new Engineer(
@@ -133,8 +138,8 @@ function promptEmployee(){
   })
 
 }
-
-function userPrompts() {
+// function that asks the first questions relating to the manager and gets the information from the user
+function managerPrompts() {
   return inquirer.prompt(managerQuestions).then((data) => {
      manager = new Manager(
       data.managerName,
@@ -148,7 +153,7 @@ function userPrompts() {
 
   });
 }
-
+//writes the HTML file to display the team profile
 function writeToFile() {
  
   const htmlDoc = generateHTML.generateHTML(manager, engineerArr, internArr);
@@ -161,6 +166,6 @@ function writeToFile() {
   });
 }
 
-userPrompts().then(()=> {
+managerPrompts().then(()=> {
   writeToFile();
 });
